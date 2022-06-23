@@ -110,3 +110,28 @@ input[type="submit"]:hover{
 .signup_link a:hover{
     text-decoration: underline;
 }
+
+.login-traitement{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    color: white;
+
+
+}
+.login-traitement h1{
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px;
+    background: rgba(0, 128, 0, 0.493);
+    border: #a6a6a6a6;
+    border-radius: 3px;
+}
+.login-traitement h2{
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px;
+    background: rgba(255, 0, 0, 0.479);
+    border: #a6a6a6a6;
+    border-radius: 3px;
+}
