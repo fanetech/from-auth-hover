@@ -1,3 +1,7 @@
+<?php
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,61 +19,85 @@
         <h1>
             Login
         </h1>
-        <div class="login-traitement">
+        <div class="traitement">
+           
+            <table>
+                <thead>
 
+                    <tr>
+                        <th>#</th>
+                        <th>nom</th>
+                        <th>prenom</th>
+                        <th>telephone</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-            <?php
-            if (isset($_POST["valider"])) {
-
-
-                if (isset($_POST["login"]) && isset($_POST["password"])) {
-                    $login = strtolower($_POST["login"]);
-                    $password = $_POST["password"];
-                    $db = mysqli_connect('localhost', 'root', '', 'ifoad');
-                    if ($db->connect_errno != 0) {
-                        echo "Erreur de connexion a la base de données";
-                    } else {
-                        $nom = $_POST['login'];
-                        $prenom = $_POST['passwd'];
-                        $req = "INSERT INTO information (nom, prenom) VALUES ('$nom', '$prenom')";
-                        $result = mysqli_query($db, $req);
-                        $nb = mysqli_num_rows($result);
-                        if ($nb) {
-                            session_start();
-                            $_SESSION['login'] = $login;
-                            $result = "Information ajouté avec succès";
-                            $typeMessage = "success";
-                        } else {
-                            $result = "information incorrect";
-                            $typeMessage = "error";
-                        }
-                    }
-                } else {
-                    $result = "Erreur: Login ou mot de passe incorrectes !";
-                    $typeMessage = "error";
-                }
+                   
+                <?php
+            $db = mysqli_connect('localhost', 'root', '', 'ifoad');
+            if ($db->connect_errno != 0) {
+                echo "Erreur de connexion a la base de données";
             } else {
-                echo "<h2>Renseigner tous les champs</h2>";
+                $req = "SELECT * FROM repectoire";
+                $result = mysqli_query($db, $req);
+                $nb = mysqli_num_rows($result);
+                if($nb){
+
+                   foreach($result as $d => $val){
+                    ?>
+                    <tr>
+                        <?php
+                        foreach($val as $value){
+
+                            echo "<td>{$value} </td>";
+                        }
+                        ?>
+                    </tr>
+                    <?php
+                        
+                   }
+                }
+                else{
+                    var_dump("err");
+                }
+            }
+            ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="login-traitement">
+        </div>
+        <div>
+            <?php
+            $result = $_SESSION['result'];
+            $typeMessage = $_SESSION['typeMessage'];
+            if ($result) {
+                if ($typeMessage == "success") {
+
+                    echo "<div class='login-traitement'><h1>$resuslt</h1></div>";
+                } else {
+                    echo "<div class='login-traitement'><h2>$resuslt</h2></div>";
+                }
             }
 
 
             ?>
         </div>
-        <div>
-            <?php
-            echo $result;
-
-            ?>
-        </div>
-        <form action="login.php" method="post">
+        <form action="traitement.php" method="post">
             <div class="txt-field">
-                <input type="text" name="login" required>
+                <input type="text" name="nom" required>
                 <label>nom</label>
                 <span></span>
             </div>
             <div class="txt-field">
-                <input type="password" name="password" required>
+                <input type="text" name="prenom" required>
                 <label>Prenom</label>
+                <span></span>
+            </div>
+            <div class="txt-field">
+                <input type="text" name="numero" required>
+                <label>Numero</label>
                 <span></span>
             </div>
             <!-- <div class="pass">
