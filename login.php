@@ -24,7 +24,7 @@ session_start();
             <table>
                 <thead>
 
-                    <tr class="trth">
+                    <tr>
                         <th>#</th>
                         <th>nom</th>
                         <th>prenom</th>
