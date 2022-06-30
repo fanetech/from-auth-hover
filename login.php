@@ -20,69 +20,50 @@ session_start();
             Login
         </h1>
         <div class="traitement">
-           
+
             <table>
                 <thead>
 
-                    <tr>
+                    <tr class="trth">
                         <th>#</th>
                         <th>nom</th>
                         <th>prenom</th>
                         <th>telephone</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                   
-                <?php
-            $db = mysqli_connect('localhost', 'root', '', 'ifoad');
-            if ($db->connect_errno != 0) {
-                echo "Erreur de connexion a la base de données";
-            } else {
-                $req = "SELECT * FROM repectoire";
-                $result = mysqli_query($db, $req);
-                $nb = mysqli_num_rows($result);
-                if($nb){
 
-                   foreach($result as $d => $val){
-                    ?>
-                    <tr>
-                        <?php
-                        foreach($val as $value){
-
-                            echo "<td>{$value} </td>";
-                        }
-                        ?>
-                    </tr>
                     <?php
-                        
-                   }
-                }
-                else{
-                    var_dump("err");
-                }
-            }
-            ?>
+                    $db = mysqli_connect('localhost', 'root', '', 'ifoad');
+                    if ($db->connect_errno != 0) {
+                        echo "Erreur de connexion a la base de données";
+                    } else {
+                        $req = "SELECT * FROM repectoire";
+                        $result = mysqli_query($db, $req);
+                        $i = 0;
+                        while ($row = mysqli_fetch_array($result)) {
+                    ?>
+                            <tr>
+                                <td><?php echo $row["id"]; ?></td>
+                                <td><?php echo $row["nom"]; ?></td>
+                                <td><?php echo $row["prenom"]; ?></td>
+                                <td><?php echo $row["numero"]; ?></td>
+                                <td><a href="update.php?id=<?php echo $row["id"]; ?>&nom=<?php echo $row["nom"] ?>&prenom=<?php echo $row["prenom"] ?>&numero=<?php echo $row["numero"] ?>">Modifier</a></td>
+                                <td><a href="delete.php?id=<?php echo $row["id"] ?>">Supprimer</a></td>
+                            </tr>
+                    <?php
+                            $i++;
+                        }
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
-        <div class="login-traitement">
-        </div>
         <div>
-            <?php
-            $result = $_SESSION['result'];
-            $typeMessage = $_SESSION['typeMessage'];
-            if ($result) {
-                if ($typeMessage == "success") {
 
-                    echo "<div class='login-traitement'><h1>$resuslt</h1></div>";
-                } else {
-                    echo "<div class='login-traitement'><h2>$resuslt</h2></div>";
-                }
-            }
-
-
-            ?>
         </div>
         <form action="traitement.php" method="post">
             <div class="txt-field">
